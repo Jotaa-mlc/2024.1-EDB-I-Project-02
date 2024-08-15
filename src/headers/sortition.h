@@ -2,6 +2,7 @@
 #define SORTEIO_
 
 #define DRAW_NUM 6
+#define MAX_DRAW 60
 
 typedef struct date
 {

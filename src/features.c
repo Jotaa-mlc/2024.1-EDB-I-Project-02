@@ -3,8 +3,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#define BUFFER_SIZE 100
-
 
 void inserir_concurso(Hash *h)
 {
@@ -37,10 +35,15 @@ void inserir_concurso(Hash *h)
     sscanf(buffer,"%u-%u-%u\n", &sort.dt.day, &sort.dt.month, &sort.dt.year);
     memset(buffer, 0, BUFFER_SIZE);
 
-    printf("Insira os números sorteados no formato n1 n2 n3 n4 n5 n6: ");
+    printf("Insira os números sorteados no formato");
+
+    for (int i = 0; i < DRAW_NUM; i++)
+        printf(" n%i", i + 1);
+    printf(": ");
+
     fgets(buffer, BUFFER_SIZE - 1, stdin);
     char *buff = strtok(buffer, " ");
-    for (int i = 0; i < 6; i++)
+    for (int i = 0; i < DRAW_NUM; i++)
     {
         sort.draw_num[i] = atoi(buff);
         buff = strtok(NULL, " ");
@@ -100,7 +103,10 @@ void remover_concurso(Hash *h)
 void listar_concursos(Hash *h)
 {
     printf("\nLista de todos os Sorteios:\n");
-    printf("Concurso - Data - Bola 1 - Bola 2 - Bola 3 - Bola 4 - Bola 5 - Bola 6\n");
+    printf("Concurso - Data");
+    for (int i = 0; i < DRAW_NUM; i++)
+        printf(" - Bola %2i", i + 1);
+    printf("\n");
 
     for (unsigned int i = 0; i < h->capacity; i++)
     {
@@ -144,7 +150,7 @@ void carregar_arquivo(Hash *h)
         buff = strtok(NULL, sep);
         sscanf(buff, "%u-%u-%u", &sort->dt.day, &sort->dt.month, &sort->dt.year);
 
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < DRAW_NUM; i++)
         {
             buff = strtok(NULL, sep);
             sort->draw_num[i] = atoi(buff);
@@ -156,7 +162,45 @@ void carregar_arquivo(Hash *h)
     }   
 }
 
+void print_statistics_menu()
+{
+    printf("/-----------------------------------------------\\\n");
+    printf("|    1 - Quantidade de sorteios de um número    |\n");
+    printf("|         2 - Dez números mais sorteados        |\n");
+    printf("|        3 - Dez números menos sorteados        |\n");
+    printf("|            4 - Concursos de um ano            |\n");
+    printf("\\-----------------------------------------------/\n");
+}
+
 void apresentar_estatisticas(Hash *h)
 {
+    print_statistics_menu();
+    char buffer[BUFFER_SIZE] = {0};
+    int cmd;
 
+    fgets(buffer, BUFFER_SIZE - 1, stdin);
+    cmd = atoi(buffer);
+
+    switch (cmd)
+    {
+        case 1:
+            estatisticas_sorteio_1numero(h);
+            break;
+        
+        case 2:
+            estatisticas_10mais_sorteados(h);
+            break;
+        
+        case 3:
+            estatisticas_10menos_sorteados(h);
+            break;
+        
+        case 4:
+            estatisticas_concursos_ano(h);
+            break;
+        
+        default:
+            printf("Comando inválido!\nFavor insira um comando descrito no menu.\n");
+            break;
+    }
 }
