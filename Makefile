@@ -1,10 +1,10 @@
 CXX = gcc
-CXXFLAGS = -g -std=c99 -Wall -Werror -Wextra -pedantic
+CXXFLAGS = -g -std=c99 -Wall -Wextra -pedantic
 SRC_DIR = src
 OBJ_DIR = objFiles
-TARGET = restaurant_maneger
+TARGET = loteria
 
-SRC_FILES = 
+SRC_FILES = home.c list.c hash.c features.c
 
 OBJ_FILES = $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRC_FILES))
 

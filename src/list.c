@@ -32,13 +32,9 @@ int push_back(List *l, Sortition *sort)
     new_node->next = NULL;
 
     if (current != NULL)
-    {
         current->next = new_node;
-    }
     else
-    {
         l->header = new_node;
-    }
     
     l->size++;
     return 1;
@@ -71,9 +67,7 @@ Sortition pop_back(List *l)
     }
 
     if (prev != NULL)
-    {
         prev->next = NULL;
-    }
     
     sort = current->sort;
     l->size--;
@@ -81,7 +75,7 @@ Sortition pop_back(List *l)
     return sort;
 }
 
-Sortition remove_item_list(List *l, int contest)
+Sortition remove_item_list(List *l, unsigned int contest)
 {
     Sortition sort = {0};
     Node *current = l->header;
@@ -112,7 +106,7 @@ Sortition remove_item_list(List *l, int contest)
     return sort;
 }
 
-Sortition search_item_list(List *l, int contest)
+Sortition search_item_list(List *l, unsigned int contest)
 {
     Node *current = l->header;
     while (current && current->sort.contest != contest)
@@ -127,4 +121,15 @@ Sortition search_item_list(List *l, int contest)
 
     Sortition sort = {0};
     return sort;
+}
+
+void print_list(List *l)
+{
+    Node *current = l->header;
+
+    while (current)
+    {
+        print_sortition(current->sort);
+        current = current->next;
+    }
 }

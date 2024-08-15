@@ -1,11 +1,12 @@
 #ifndef FEATURES_
 #define FEATURES_
+#include "hash.h"
 
-void inserir_concurso();
-void buscar_concurso();
-void remover_concurso();
-void listar_concursos();
-void carregar_arquivo();
-void apresentar_estatisticas();
+void inserir_concurso(Hash *h);
+void buscar_concurso(Hash *h);
+void remover_concurso(Hash *h);
+void listar_concursos(Hash *h);
+void carregar_arquivo(Hash *h);
+void apresentar_estatisticas(Hash *h);
 
 #endif

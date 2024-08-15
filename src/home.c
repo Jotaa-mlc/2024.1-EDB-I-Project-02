@@ -31,6 +31,8 @@ int sair()//confirmação de saida
 
 int main()
 {
+    Hash *hash_table = initialize_hash(3000);
+
     int logout = 0;
     char buffer[10] = {0};
     int cmd;
@@ -44,27 +46,27 @@ int main()
         switch (cmd)
         {
             case 1://Inserir Concurso
-                inserir_concurso();
+                inserir_concurso(hash_table);
                 break;
             
             case 2://Buscar Concurso
-                buscar_concurso();
+                buscar_concurso(hash_table);
                 break;
             
             case 3://Remover Concurso
-                remover_concurso();
+                remover_concurso(hash_table);
                 break;
             
             case 4://Listar todos os Concursos
-                listar_concursos();
+                listar_concursos(hash_table);
                 break;
             
             case 5://Carregar arquivo
-                carregar_arquivo();
+                carregar_arquivo(hash_table);
                 break;
             
             case 6://Apresentar estatísticas
-                apresentar_estatisticas();
+                apresentar_estatisticas(hash_table);
                 break;
             
             case 7://sair do programa

@@ -4,16 +4,12 @@
 Hash *initialize_hash(int capacity)
 {
     Hash *h = calloc(1, sizeof(Hash));
-    if (h)
-    {
-        h->size = 0;
-        h->capacity = capacity;
-        h->table = calloc(h->capacity, sizeof(List*));
-    }
-    else
-    {
-        h = NULL;
-    }
+    if (!h)
+        return NULL;
+
+    h->size = 0;
+    h->capacity = capacity;
+    h->table = calloc(h->capacity, sizeof(List*));
     
     return h;
 }
@@ -22,7 +18,7 @@ void destruct_hash(Hash *h)
 {
     for (unsigned int i = 0; i < h->capacity; i++)
     {
-        if (h->table[i] != NULL)
+        if (h->table[i])
         {
             free(h->table[i]);
         }
@@ -39,7 +35,7 @@ int hash_fun(int key, int capacity)
 
 int insert_hash(Hash *h, Sortition *sort)
 {
-    if (search_item_hash(h, sort->contest).contest != 0)
+    if (search_item_hash(h, sort->contest).contest == 0)
     {
         int key = hash_fun(sort->contest, h->capacity);
 
@@ -51,15 +47,16 @@ int insert_hash(Hash *h, Sortition *sort)
         {
             h->table[key] = initialize_list();
             push_back(h->table[key], sort);
-        }        
+        }
+        h->size++;
+        return 1;
     }
-    else // Sortition alredy exist 
-    {
-        return -1;
-    }
+    
+    // Sortition alredy exist 
+    return 0;
 }
 
-int remove_rash(Hash *h, int contest)
+int remove_hash(Hash *h, unsigned int contest)
 {
     int key = hash_fun(contest, h->capacity);
 
@@ -67,14 +64,17 @@ int remove_rash(Hash *h, int contest)
     {
         if(search_item_list(h->table[key], contest).contest != 0)
         {
-            
+            if (remove_item_list(h->table[key], contest).contest != 0)
+            {
+                return 1;
+            }
         }
     }
 
     return 0;
 }
 
-Sortition search_item_hash(Hash *h, int contest)
+Sortition search_item_hash(Hash *h, unsigned int contest)
 {
     int key = hash_fun(contest, h->capacity);
 

@@ -17,4 +17,5 @@ typedef struct sortition
     int draw_num[DRAW_NUM];
 }Sortition;
 
+void print_sortition(Sortition sort);
 #endif
