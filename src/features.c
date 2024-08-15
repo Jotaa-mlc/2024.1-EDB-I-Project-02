@@ -8,17 +8,93 @@
 
 void inserir_concurso(Hash *h)
 {
+    char buffer[BUFFER_SIZE] = {0};
+    Sortition sort = {0};
+    printf("\nInserindo um concurso\nPor favor insira as informações conforme solicitado.\n");
 
+    int contest_ok = 0;
+    while (!contest_ok)
+    {
+        printf("Número do concurso: ");
+        fgets(buffer, BUFFER_SIZE - 1, stdin);
+
+        sort.contest = atoi(buffer);
+        
+        if (search_item_hash(h, sort.contest).contest != 0)
+        {
+            printf("Já existe um concurso com o número: %u\n", sort.contest);
+            printf("Por favor, insira um número que não esteja cadastrado.\n");
+        }
+        else
+        {
+            contest_ok = 1;
+        }
+        memset(buffer, 0, BUFFER_SIZE);
+    }
+
+    printf("Insira a data no formato dd-MM-yyyy (Ex.: 23-7-2003): ");
+    fgets(buffer, BUFFER_SIZE - 1, stdin);
+    sscanf(buffer,"%u-%u-%u\n", &sort.dt.day, &sort.dt.month, &sort.dt.year);
+    memset(buffer, 0, BUFFER_SIZE);
+
+    printf("Insira os números sorteados no formato n1 n2 n3 n4 n5 n6: ");
+    fgets(buffer, BUFFER_SIZE - 1, stdin);
+    char *buff = strtok(buffer, " ");
+    for (int i = 0; i < 6; i++)
+    {
+        sort.draw_num[i] = atoi(buff);
+        buff = strtok(NULL, " ");
+    }
+    memset(buffer, 0, BUFFER_SIZE);
+
+    if (!insert_hash(h, &sort))
+    {
+        printf("Não foi possível inserir o sorteio.\n");
+    }
+    else
+    {
+        printf("O Concurso foi inserido com sucesso.\n");
+    }
 }
 
 void buscar_concurso(Hash *h)
 {
-    
+    char buffer[BUFFER_SIZE] = {0};
+    unsigned int contest = 0;
+    printf("\nDigite o número do concurso que deseja buscar: ");
+    fgets(buffer, BUFFER_SIZE - 1, stdin);
+    contest = atoi(buffer);
+
+    Sortition sort = search_item_hash(h, contest);
+    if (sort.contest != 0)
+    {
+        printf("\nFoi encontrado o seguite Sorteio:\n");
+        print_sortition(sort);
+    }
+    else
+    {
+        printf("\nNão foi possível localizar nenhum concurso com o número: %u\n", contest);
+    }
 }
 
 void remover_concurso(Hash *h)
 {
+    char buffer[BUFFER_SIZE] = {0};
+    unsigned int contest = 0;
+    printf("\nDigite o número do concurso que deseja remover: ");
+    fgets(buffer, BUFFER_SIZE - 1, stdin);
+    contest = atoi(buffer);
 
+    Sortition sort = remove_item_hash(h, contest);
+    if (sort.contest != 0)
+    {
+        printf("O seguinte sorteio foi removido:\n");
+        print_sortition(sort);
+    }
+    else
+    {
+        printf("Não foi possível localizar o concurso de número: %u\n", contest);
+    }
 }
 
 void listar_concursos(Hash *h)

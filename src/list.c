@@ -89,20 +89,18 @@ Sortition remove_item_list(List *l, unsigned int contest)
         prev = current->prev;
     }
     
-    if (current)
-    {
-        sort = current->sort;
-        if (prev != NULL)
-            prev->next = next;
-
-        if (next != NULL)
-            next->prev = prev;
-
-        l->size--;
-        free(current);
+    if (!current)
         return sort;
-    }
     
+    sort = current->sort;
+    if (prev != NULL)
+        prev->next = next;
+
+    if (next != NULL)
+        next->prev = prev;
+
+    l->size--;
+    free(current);
     return sort;
 }
 

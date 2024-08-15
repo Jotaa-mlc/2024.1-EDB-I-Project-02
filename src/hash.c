@@ -56,7 +56,7 @@ int insert_hash(Hash *h, Sortition *sort)
     return 0;
 }
 
-int remove_hash(Hash *h, unsigned int contest)
+Sortition remove_item_hash(Hash *h, unsigned int contest)
 {
     int key = hash_fun(contest, h->capacity);
 
@@ -64,14 +64,17 @@ int remove_hash(Hash *h, unsigned int contest)
     {
         if(search_item_list(h->table[key], contest).contest != 0)
         {
-            if (remove_item_list(h->table[key], contest).contest != 0)
+            Sortition sort = remove_item_list(h->table[key], contest);
+            if (sort.contest != 0)
             {
-                return 1;
+                h->size--;
+                return sort;
             }
         }
     }
 
-    return 0;
+    Sortition sort = {0};
+    return sort;
 }
 
 Sortition search_item_hash(Hash *h, unsigned int contest)
