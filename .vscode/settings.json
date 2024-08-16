@@ -4,6 +4,7 @@
         "string_view": "c",
         "initializer_list": "c",
         "utility": "c",
-        "features.h": "c"
+        "features.h": "c",
+        "algorithm": "c"
     }
 }

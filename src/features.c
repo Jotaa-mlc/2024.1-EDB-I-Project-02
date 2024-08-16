@@ -103,10 +103,7 @@ void remover_concurso(Hash *h)
 void listar_concursos(Hash *h)
 {
     printf("\nLista de todos os Sorteios:\n");
-    printf("Concurso - Data");
-    for (int i = 0; i < DRAW_NUM; i++)
-        printf(" - Bola %2i", i + 1);
-    printf("\n");
+    print_sortition_header();
 
     for (unsigned int i = 0; i < h->capacity; i++)
     {

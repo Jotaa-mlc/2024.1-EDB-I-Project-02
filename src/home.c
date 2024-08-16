@@ -79,5 +79,6 @@ int main()
         }
         printf("\n\n");
     }
+    destruct_hash(hash_table);
     return 0;
 }
