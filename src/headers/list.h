@@ -9,6 +9,7 @@ typedef struct list
 } List;
 
 List *initialize_list();
+void destruct_list(List *l);
 int push_back(List *l, Sortition *sort);
 Sortition pop_front(List *l);
 Sortition pop_back(List *l);

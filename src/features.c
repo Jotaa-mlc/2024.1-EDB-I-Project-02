@@ -133,30 +133,37 @@ void carregar_arquivo(Hash *h)
         printf("ERRO: Não foi possível abrir o arquivo especificado.\n");
         return;
     }
+    else
+    {
+        printf("O arquivo foi carregado com sucesso.\n");
+    }
+    
 
     fgets(buffer, BUFFER_SIZE - 1, sortition_file);
 
     while (fgets(buffer, BUFFER_SIZE - 1, sortition_file))
     {
         char *buff;
-        Sortition *sort = calloc(1, sizeof(Sortition));
+        Sortition sort = {0};
         
         buff = strtok(buffer, sep);
-        sort->contest = atoi(buff);
+        sort.contest = atoi(buff);
 
         buff = strtok(NULL, sep);
-        sscanf(buff, "%u-%u-%u", &sort->dt.day, &sort->dt.month, &sort->dt.year);
+        sscanf(buff, "%u-%u-%u", &sort.dt.day, &sort.dt.month, &sort.dt.year);
 
         for (int i = 0; i < DRAW_NUM; i++)
         {
             buff = strtok(NULL, sep);
-            sort->draw_num[i] = atoi(buff);
+            sort.draw_num[i] = atoi(buff);
         }
         
         memset(buffer, 0, BUFFER_SIZE);
-        if (!insert_hash(h, sort))
-            printf("\nNão foi possível inserir o sorteio de numero %u.\nJá existe um concurso com esse número", sort->contest);
-    }   
+        if (!insert_hash(h, &sort))
+            printf("\nNão foi possível inserir o sorteio de numero %u.\nJá existe um concurso com esse número", sort.contest);
+    }
+
+    fclose(sortition_file);
 }
 
 void print_statistics_menu()

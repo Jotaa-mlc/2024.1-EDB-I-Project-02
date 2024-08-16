@@ -20,7 +20,7 @@ void destruct_hash(Hash *h)
     {
         if (h->table[i])
         {
-            free(h->table[i]);
+            destruct_list(h->table[i]);
         }
     }
 

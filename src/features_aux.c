@@ -155,5 +155,5 @@ void estatisticas_concursos_ano(Hash *h)
     {
         printf("Não foram encontrados concursos para o ano de %4u.\n", year);
     }
-    free(concursos_ano);
+    destruct_list(concursos_ano);
 }

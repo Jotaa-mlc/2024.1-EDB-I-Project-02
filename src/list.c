@@ -13,6 +13,19 @@ List *initialize_list()
     return l;
 }
 
+void destruct_list(List *l)
+{
+    Node *current = l->header;
+    while (current)
+    {
+        Node *temp = current;
+        current = current->next;
+        free(temp);
+    }
+
+    free(l);
+}
+
 int push_back(List *l, Sortition *sort)
 {
     Node *current = l->header;
